@@ -1,0 +1,24 @@
+import 'package:animate_do/animate_do.dart';
+import 'package:fitsole_flutter/data/env/env.dart';
+import 'package:fitsole_flutter/domain/blocs/blocs.dart';
+import 'package:fitsole_flutter/domain/models/response/response_categories_home.dart';
+import 'package:fitsole_flutter/domain/services/services.dart';
+import 'package:fitsole_flutter/presentation/components/shimmer_fitsole.dart';
+import 'package:fitsole_flutter/presentation/components/widgets.dart';
+import 'package:fitsole_flutter/presentation/themes/colors_frave.dart';
+import 'package:fitsole_flutter/presentation/components/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+part 'animation_route.dart';
+part 'modal_success.dart';
+part 'modal_loading.dart';
+part 'error_message.dart';
+part 'modal_warning.dart';
+part 'loading_upload.dart';
+part 'modal_add_cart.dart';
+part 'access_permission.dart';
+part 'modal_picture.dart';
+part 'modal_loading_short.dart';
