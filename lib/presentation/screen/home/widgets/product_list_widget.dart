@@ -4,12 +4,16 @@ class ProductListWidget extends StatelessWidget {
   final String title;
   final bool isLoading;
   final ProductEvent event;
+  final bool hasReachedMax; // New property
+  final VoidCallback onLoadMore; // New property
 
   const ProductListWidget({
     Key? key,
     required this.title,
     this.isLoading = false,
     required this.event,
+    this.hasReachedMax = false, // Default value
+    required this.onLoadMore, // Callback for loading more products
   }) : super(key: key);
 
   @override
@@ -43,7 +47,38 @@ class ProductListWidget extends StatelessWidget {
           } else if (state is ProductsLoading) {
             return Center(child: CircularProgressIndicator());
           } else if (state is ProductsLoaded) {
-            return _buildProductGrid(products: state.products);
+            return Column(
+              children: [
+                _buildProductGrid(products: state.products),
+                if (!hasReachedMax && title == "ALL PRODUCTS")
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        onLoadMore();
+                        //scroll to the bottom of the page
+                        ScrollController _scrollController = ScrollController();
+                        _scrollController.animateTo(
+                          _scrollController.position.maxScrollExtent,
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeOut,
+                        );
+                      },
+                      child: Center(
+                        child: Text(
+                          'Load More',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            );
           }
           return Container();
         }),

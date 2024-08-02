@@ -126,11 +126,25 @@ class HomePageContent extends StatelessWidget {
             ),
             // Most Popular Product List
             const SizedBox(height: 15),
-            ProductListWidget(
-              title: 'Most Popular'.toUpperCase(),
-              event: const LoadPopularProducts(),
-            ),
+            BlocBuilder<ProductBloc, ProductState>(
+              builder: (context, state) {
+                bool hasReachedMax = false;
+                VoidCallback onLoadMore = () {};
 
+                if (state is ProductsLoaded) {
+                  hasReachedMax = state
+                      .hasReachedMax; // Assuming ProductState has this property
+                  onLoadMore = () {};
+                }
+
+                return ProductListWidget(
+                  title: 'Most Popular'.toUpperCase(),
+                  event: const LoadPopularProducts(),
+                  hasReachedMax: hasReachedMax,
+                  onLoadMore: onLoadMore,
+                );
+              },
+            ),
             const SizedBox(height: 15),
             BlocBuilder<CategoryBloc, CategoryState>(
               builder: (context, state) {
@@ -138,14 +152,14 @@ class HomePageContent extends StatelessWidget {
                   return const BrandFilterWidget(brands: [], isLoading: true);
                 } else if (state is CategoryLoaded) {
                   if (state.categories.isEmpty) {
-                    return const Text('No brands available');
+                    return const Text('No categories available');
                   }
                   return CategoriesWidget(
                     categories: state.categories,
                     isLoading: false,
                   );
                 } else if (state is CategoryError) {
-                  return const Text('Failed to load brands');
+                  return const Text('Failed to load categories');
                 } else {
                   return errorContainer('Failed to load categories', context);
                 }
@@ -153,38 +167,44 @@ class HomePageContent extends StatelessWidget {
             ),
             // Latest Arrivals
             const SizedBox(height: 15),
-            ProductListWidget(
-              title: 'Latest Arrivals'.toUpperCase(),
-              event: const LoadLatestProducts(),
-            ),
-            const SizedBox(height: 15),
-            ProductListWidget(
-              title: 'All Products'.toUpperCase(),
-              event: const LoadAllProducts(),
-            ),
-            const SizedBox(height: 15),
-            // Load More
-            GestureDetector(
-              onTap: () {
-                print('Load More');
+            BlocBuilder<ProductBloc, ProductState>(
+              builder: (context, state) {
+                bool hasReachedMax = false;
+                VoidCallback onLoadMore = () {};
+
+                if (state is ProductsLoaded) {
+                  hasReachedMax = state.hasReachedMax;
+                  onLoadMore = () {};
+                }
+
+                return ProductListWidget(
+                  title: 'Latest Arrivals'.toUpperCase(),
+                  event: const LoadLatestProducts(),
+                  hasReachedMax: hasReachedMax,
+                  onLoadMore: onLoadMore,
+                );
               },
-              child: Container(
-                width: double.infinity,
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextFitsole(
-                      text: 'Load More',
-                      fontSize: 16,
-                      isTitle: false,
-                    ),
-                    Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.black,
-                    ),
-                  ],
-                ),
-              ),
+            ),
+            const SizedBox(height: 15),
+            BlocBuilder<ProductBloc, ProductState>(
+              builder: (context, state) {
+                bool hasReachedMax = false;
+                VoidCallback onLoadMore = () {};
+
+                if (state is ProductsLoaded) {
+                  hasReachedMax = state.hasReachedMax;
+                  onLoadMore = () {
+                    context.read<ProductBloc>().add(LoadMoreProducts());
+                  };
+                }
+
+                return ProductListWidget(
+                  title: 'All Products'.toUpperCase(),
+                  event: const LoadAllProducts(),
+                  hasReachedMax: hasReachedMax,
+                  onLoadMore: onLoadMore,
+                );
+              },
             ),
             const SizedBox(height: 15),
           ],

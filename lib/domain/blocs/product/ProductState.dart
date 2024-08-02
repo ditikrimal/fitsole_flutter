@@ -14,8 +14,19 @@ class ProductsLoading extends ProductState {}
 
 class ProductsLoaded extends ProductState {
   final List<Product> products;
+  final bool hasReachedMax;
 
-  const ProductsLoaded({required this.products});
+  ProductsLoaded({required this.products, required this.hasReachedMax});
+
+  ProductsLoaded copyWith({
+    List<Product>? products,
+    bool? hasReachedMax,
+  }) {
+    return ProductsLoaded(
+      products: products ?? this.products,
+      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+    );
+  }
 
   @override
   List<Object> get props => [products];

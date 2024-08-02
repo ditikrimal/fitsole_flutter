@@ -14,7 +14,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       try {
         emit(ProductsLoading());
         final products = await productRepository.fetchAllProducts();
-        emit(ProductsLoaded(products: products));
+        emit(ProductsLoaded(products: products, hasReachedMax: false));
       } catch (e) {
         emit(ProductError(e.toString()));
       }
@@ -24,7 +24,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       try {
         emit(ProductsLoading());
         final products = await productRepository.fetchMostPopularProducts();
-        emit(ProductsLoaded(products: products));
+        emit(ProductsLoaded(products: products, hasReachedMax: false));
       } catch (e) {
         emit(ProductError(e.toString()));
       }
@@ -34,9 +34,26 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       try {
         emit(ProductsLoading());
         final products = await productRepository.fetchLatestArrivals();
-        emit(ProductsLoaded(products: products));
+        emit(ProductsLoaded(products: products, hasReachedMax: false));
       } catch (e) {
         emit(ProductError(e.toString()));
+      }
+    });
+
+    on<LoadMoreProducts>((event, emit) async {
+      final currentState = state;
+      if (currentState is ProductsLoaded) {
+        try {
+          final products = await productRepository.fetchAllProducts();
+          emit(products.isEmpty
+              ? currentState.copyWith(hasReachedMax: true)
+              : ProductsLoaded(
+                  products: currentState.products + products,
+                  hasReachedMax: false,
+                ));
+        } catch (e) {
+          emit(ProductError(e.toString()));
+        }
       }
     });
   }

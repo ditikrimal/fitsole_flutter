@@ -12,24 +12,41 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-          label: 'Favorites',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-      ],
-      currentIndex: selectedIndex,
-      selectedItemColor: Colors.black,
-      onTap: onItemTapped,
+    return Container(
+      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: GNav(
+        backgroundColor: Colors.white,
+        activeColor: Colors.white,
+        tabBorderRadius: 15,
+        iconSize: 25,
+        tabBackgroundColor: Colors.grey[800]!,
+        selectedIndex: selectedIndex,
+        onTabChange: onItemTapped,
+        tabs: [
+          GButton(
+            icon: Icons.home,
+          ),
+          GButton(
+            icon: Icons.favorite,
+          ),
+          GButton(
+            icon: Icons.person,
+          ),
+        ],
+      ),
     );
   }
 }

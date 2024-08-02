@@ -20,7 +20,8 @@ class _BrandFilterWidgetState extends State<BrandFilterWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 70,
+      padding: const EdgeInsets.only(top: 10),
       width: double.infinity,
       child: widget.isLoading ? _buildLoadingSkeleton() : _buildContent(),
     );

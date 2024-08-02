@@ -3,6 +3,7 @@ import 'package:fitsole_flutter/domain/models/Category.dart';
 import 'package:fitsole_flutter/domain/models/PromoBanner.dart';
 import 'package:fitsole_flutter/domain/models/brand.dart';
 import 'package:fitsole_flutter/domain/models/Product.dart';
+import 'package:fitsole_flutter/presentation/components/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';

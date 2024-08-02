@@ -28,3 +28,10 @@ class LoadLatestProducts extends ProductEvent {
   @override
   List<Object> get props => [];
 }
+
+class LoadMoreProducts extends ProductEvent {
+  const LoadMoreProducts();
+
+  @override
+  List<Object> get props => [];
+}
