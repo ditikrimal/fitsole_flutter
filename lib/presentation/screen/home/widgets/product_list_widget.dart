@@ -43,9 +43,9 @@ class ProductListWidget extends StatelessWidget {
         BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
           if (state is ProductInitial) {
             context.read<ProductBloc>().add(event);
-            return Center(child: CircularProgressIndicator());
+            return _buildLoadingSkeleton();
           } else if (state is ProductsLoading) {
-            return Center(child: CircularProgressIndicator());
+            return _buildLoadingSkeleton();
           } else if (state is ProductsLoaded) {
             return Column(
               children: [

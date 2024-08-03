@@ -28,6 +28,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ],
       ),
       child: GNav(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         backgroundColor: Colors.white,
         activeColor: Colors.white,
         tabBorderRadius: 15,
@@ -41,6 +42,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
           ),
           GButton(
             icon: Icons.favorite,
+          ),
+          GButton(
+            icon: Icons.shopping_cart,
           ),
           GButton(
             icon: Icons.person,
